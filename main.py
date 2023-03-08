@@ -241,5 +241,5 @@ if __name__ == "__main__":
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature,weatherB, max_temperatureB, min_temperatureB, note_ch, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
     os.system("pause")
