@@ -97,6 +97,11 @@ def get_birthday(birthday, year, today):
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
     return birth_day
 
+def get_words():
+  words = requests.get("https://api.shadiao.pro/chp")
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
 
 def get_ciba():
     url = "http://open.iciba.com/dsapi/"
@@ -154,6 +159,18 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "color": get_color()
             },
             "max_temperature": {
+                "value": max_temperature,
+                "color": get_color()
+            },
+             "weatherB": {
+                "value": weather,
+                "color": get_color()
+            },
+            "min_temperatureB": {
+                "value": min_temperature,
+                "color": get_color()
+            },
+            "max_temperatureB": {
                 "value": max_temperature,
                 "color": get_color()
             },
@@ -218,9 +235,11 @@ if __name__ == "__main__":
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
     weather, max_temperature, min_temperature = get_weather(province, city)
+    provinceB, cityB = config["provinceB"], config["cityB"]
+    weatherB, max_temperatureB, min_temperatureB = get_weather(provinceB, cityB)
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature,weatherB, max_temperatureB, min_temperatureB, note_ch, note_en)
     os.system("pause")
