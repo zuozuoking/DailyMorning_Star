@@ -116,7 +116,7 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, weatherB, max_temperatureB, min_temperatureB,note_ch, note_en):
+def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature,cityB_name ,weatherB, max_temperatureB, min_temperatureB,note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -162,6 +162,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "value": max_temperature,
                 "color": get_color()
             },
+              "cityB": {
+                "value": cityB_name,
+                "color": get_color()
+            },
              "weatherB": {
                 "value": weatherB,
                 "color": get_color()
@@ -185,6 +189,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             "note_ch": {
                 "value": note_ch,
                 "color": get_color()
+            },
+            "words":{
+                "value":get_words(), 
+               "color": get_color()
             }
         }
     }
@@ -241,5 +249,5 @@ if __name__ == "__main__":
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, weatherB, max_temperatureB, min_temperatureB, note_ch, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature, cityB, weatherB, max_temperatureB, min_temperatureB, note_ch, note_en)
     os.system("pause")
